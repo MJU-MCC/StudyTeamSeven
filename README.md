@@ -6,9 +6,9 @@
 
 ### 기술 스택
 ![Static Badge](https://img.shields.io/badge/python-%233776AB?style=for-the-badge&logo=python&logoColor=%233776AB&labelColor=black)
-![Static Badge](https://img.shields.io/badge/django-%233776AB?style=for-the-badge&logo=django&logoColor=%233776AB&labelColor=black)
+![Static Badge](https://img.shields.io/badge/django-darkgreen?style=for-the-badge&logo=django&logoColor=darkgreen&labelColor=black)
 
-### gihub Branch rule
+### Gihub Branch rule
 GitFlow 브랜치 관리 전략
 - Master: 제품출시 브랜치
 - Dev: 개발 브랜치
@@ -16,7 +16,7 @@ GitFlow 브랜치 관리 전략
 - Realese: 이번 출시 버전 준비 브랜치
 - Hotfix: 버그 수정 브랜치
 
-### commit Rule
+### Commit Rule
 - [INITIAL]: REPOSITORY를 생성하고 파일을 업로드 할 때
 - [ADD]: 신규 파일 추가
 - [UPPDATE]: 코드 변경이 일어날 때
