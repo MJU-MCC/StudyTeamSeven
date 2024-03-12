@@ -5,8 +5,8 @@
 안녕하세요! 여기는 STUDY 7팀이 공부할 내용을 올릴 예정입니다.
 
 ### STUDY 7 TEAM 멤버
-- [이종윤](https://github.com/jongcoding)
-- [이윤태](https://github.com/yoont1016)
+[![Jongcoding](https://img.shields.io/badge/Jongcoding-JongYun-ff69b4?style=for-the-badge&logo=github)](https://github.com/jongcoding)
+[![yoont1016](https://img.shields.io/badge/yoont1016-YoonTae-4CAF50?style=for-the-badge&logo=github)](https://github.com/yoont1016)
 
 ### 기술 스택
 ![Python Badge](https://img.shields.io/badge/python-%233776AB?style=for-the-badge&logo=python&logoColor=%233776AB&labelColor=black)
