@@ -1,2 +1,2 @@
 print("Hello")
-chgvhvghvh
+print("수정했습니다")
