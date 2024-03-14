@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django related
+*.log
+*.pot
+*.pyc
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+
+# Development/Python environment
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*~
+.project
+.DS_Store
+.settings/
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.vscode/
+
+# Local configuration
+local_settings.py
+
+# IDE/Editor specific files
+*.iml
+*.pyc
+*.swo
+*.swp
+*.idea/
+*.sublime-workspace
+*.sublime-project
+.vscode/
