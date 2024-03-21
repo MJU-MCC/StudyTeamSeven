@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="ko">
+    <body>
+        <h1>pyburger에 오신걸 환영합니다</h1>
+        {% for i in burger %} 
+            <div> 
+                {{i.name}}
+                (가격: {{i.price}}원,
+                칼로리: {{i.calrories}} kcal)
+            </div>
+        {% endfor %}
+    </body>
+</html>
