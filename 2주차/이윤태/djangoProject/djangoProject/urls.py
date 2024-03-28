@@ -1,5 +1,5 @@
 """
-URL configuration for config project.
+URL configuration for djangoProject project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -16,11 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from config.views import main, burger_list, burger_search
+from product.views import ProductListAPI
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # 경로를 지정하지 않으면 main직원을 호출한다.
-    path("", main),
-    path("burgers/", burger_list),
-    path("search/", burger_search),
+    path('api/product', ProductListAPI.as_view())
 ]

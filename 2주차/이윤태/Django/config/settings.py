@@ -14,15 +14,14 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-TEMPLATES_DIR=BASE_DIR / "templates" # 새 경로 할당
-
+TEMPLATES_DIR = BASE_DIR / "templates" #templates 폴더를 경로에 할당
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8wok@u8_t_-po-^vm$$4@lcfnqe&k!kkcuyt+a58pp1)qa)!^0'
+SECRET_KEY = 'django-insecure-$=(_0k68m30o6=0&fg=2a*^s-fs_vc+t*wkv5h!k62+k6!=f$s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -33,8 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-  # 기존 항목들의 맨 위에 기록
-    'burgers',
+    "burgers",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,11 +52,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
-# 생성한 변수를 Templates 항목의 "DIRS" 리스트에 추가한다.
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR],  # Template을 찾을 경로 추가
+        'DIRS': [TEMPLATES_DIR], #위에서 선언한 TEMPLATES_DIR변수(templates경로지정)
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
