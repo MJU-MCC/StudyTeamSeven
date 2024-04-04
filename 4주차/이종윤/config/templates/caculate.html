@@ -1,0 +1,61 @@
+<!-- calculate.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <form id="calcForm">
+        <label for="number1">Number 1:</label>
+        <input type="text" id="number1" name="number1"><br><br>
+        
+        <label for="number2">Number 2:</label>
+        <input type="text" id="number2" name="number2"><br><br>
+        
+        <button type="submit">Calculate</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('calcForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var number1 = document.getElementById('number1').value;
+            var number2 = document.getElementById('number2').value;
+
+            fetch('/calculate/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ number1: number1, number2: number2 })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = 'Result: ' + data.result;
+            });
+        });
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;0
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>
