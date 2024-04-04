@@ -1,0 +1,39 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <Link rel = "stylesheet" href = "{% static 'css/style.css' %}" >
+</head>
+<body>
+    <div id = "navbar">
+        <a href="/"><span>pylog</span></a>
+        <a href="/post/add/" class="btn btn-primary">글 작성</a>
+    </div>
+    <div id = "post_list">
+        <ul class = "posts">
+            <br><br>
+            <br><br>
+            {% for post in posts %}
+                <li class = "post">
+                    <div>
+                        <a href="/post/{{post.id}}/"><h1>{{post.title}}</h1></a> 
+                    </div>
+                    <p>{{post.content}}</p>
+                    <ul class = "comments">
+                        {% for comment in post.comment_set.all %}
+                            <li class = "comment">{{comment.content}}</li>
+                        {% empty %}
+                            <li class = "comment-empty">아직 댓글이 없습니다.</li>
+                        {% endfor %}
+                    </ul>
+                    {% if post.thumbnail %}
+                        <img src="{{post.thumbnail.url}}" alt="">
+                    {% else %}
+                        <img src="" alt="">
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
