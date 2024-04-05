@@ -1,0 +1,72 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        #content-wrapper {
+            margin-top: 70px;
+            padding: 20px;
+            text-align: center;
+        }
+        #comment-list {
+            text-align: left;
+        }
+
+        #navbar {
+            margin-bottom: 20px;
+        }
+        #photo {
+            margin-bottom: 0px; /* 썸네일 아래쪽 간격을 10px로 지정 */
+        }
+
+        #post-detail {
+            margin-top: 0px; /* 내용 영역 위쪽 간격을 10px로 지정 */
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <span><h1>{{post.title}}</h1></span>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <h1>-</h1>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <span><h2>{{post.singer}}</h2></span>
+        <a href="/post/" class="btn btn-primary">목록으로</a>
+    </div>
+    <div id="content-wrapper">
+        <div id="photo">
+            {% if post.thumbnail %}
+                <span><img src="{{post.thumbnail.url}}"></span>
+            {% endif %}
+        </div>
+        <div id="post-detail">
+            <div id="lyrics"> 
+                <h1>가사</h1><br>
+                {{post.lyrics|linebreaksbr}} 
+            </div>
+            <br><br><br>
+            <div id="content"> 
+                <h1>노래 소개</h1><br>
+                {{post.content|linebreaksbr}} 
+            </div>
+            <br><br><br>
+            <div id="comment-list">
+                <ul class="comments">
+                    <h1>댓글</h1><br><br>
+                    {% for comment in post.comment_set.all %}
+                        <li class="comment">{{comment.content}}</li><br>
+                    {% empty %}
+                        <li class="comment-empty">"아직 댓글이 없습니다.</li><br>
+                    {% endfor %}
+                </ul>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <textarea name="comment"></textarea>
+                <button type="submit" class="btn btn-primary">댓글 작성</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
