@@ -31,6 +31,10 @@ def calculate(request):
 
 def process_values(request):
     if request.method == 'POST':
+        # 이전 그래프를 지우고 Figure을 새로 생성합니다.
+        plt.clf()
+        fig = plt.figure()
+
         omega_1_input = request.POST.get('omega_1')
         omega_2_input = request.POST.get('omega_2')
         test_sample_input = request.POST.get('test_sample')
@@ -66,10 +70,8 @@ def process_values(request):
 
         Z_omega_1 = pdf_omega_1.pdf(grid).reshape(xx.shape)
         Z_omega_2 = pdf_omega_2.pdf(grid).reshape(xx.shape)
-        
-        
+
         # 테스트 샘플 시각화
-        plt.clf()  # 그래프 초기화
         plt.scatter(x[0], x[1], color='green', marker='x', label='Test Sample')
 
         # 결정 경계 그리기
@@ -107,7 +109,8 @@ def process_values(request):
 
         # 분류 결과와 함께 입력된 샘플의 클래스 출력
         result = classification_results
-       
 
+        # 이전 그래프를 지우고 Figure을 닫습니다.
+        plt.close(fig)
         return render(request, 'result.html', {'graphic': graphic, 'result': result})
     return render(request, "decision_boundary.html")
