@@ -1,0 +1,62 @@
+<!-- decision_boundary.html -->
+
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Boundary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+        }
+        label {
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 300px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>최소 오류 베이시언 분류기</h1>
+    <form method="post" action="{% url 'process_values' %}">
+        {% csrf_token %}
+        <label for="omega_1" style="text-align: left;">Omega_1:</label>
+        <input type="text" id="omega_1" name="omega_1">
+        <br>
+        <label for="omega_2" style="text-align: left;">Omega_2:</label>
+        <input type="text" id="omega_2" name="omega_2">
+        <br>
+        <label for="test_sample" style="text-align: left;">Test Sample:</label>
+        <input type="text" id="test_sample" name="test_sample"><br><br>
+        <button type="submit">Submit</button>
+        
+    </form>
+</body>
+</html>
