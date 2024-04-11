@@ -47,11 +47,44 @@
     <h1>결과</h1>
     <h2>베이시언 분류 결과:</h2>
     <ul>
-        
         <li>{{ result }}</li>
-        
     </ul>
+    
+    <h2>평균 행렬:</h2>
+    <table id="result-table">
+        <tr>
+            <th>클래스</th>
+            <th>평균 행렬</th>
+        </tr>
+        <tr>
+            <td>omega_1</td>
+            <td>{{ mean_omega_1 }}</td>
+        </tr>
+        <tr>
+            <td>omega_2</td>
+            <td>{{ mean_omega_2 }}</td>
+        </tr>
+    </table>
+    
+    <h2>공분산 행렬:</h2>
+    <table id="result-table">
+        <tr>
+            <th>클래스</th>
+            <th>공분산 행렬</th>
+        </tr>
+        <tr>
+            <td>omega_1</td>
+            <td>{{ cov_omega_1 }}</td>
+        </tr>
+        <tr>
+            <td>omega_2</td>
+            <td>{{ cov_omega_2 }}</td>
+        </tr>
+    </table>
+    
     <h2>그래프:</h2>
-    <img src="{{ graphic }}" alt="Decision Boundary">
+    <div id="graphic">
+        <img src="{{ graphic }}" alt="Decision Boundary">
+    </div>
 </body>
 </html>

@@ -15,6 +15,7 @@ def index(request):
 @csrf_exempt
 def calculate(request):
     if request.method == 'POST':
+        
         # POST 요청에서 데이터 추출
         data = json.loads(request.body)
         
@@ -31,10 +32,6 @@ def calculate(request):
 
 def process_values(request):
     if request.method == 'POST':
-        # 이전 그래프를 지우고 Figure을 새로 생성합니다.
-        plt.clf()
-        fig = plt.figure()
-
         omega_1_input = request.POST.get('omega_1')
         omega_2_input = request.POST.get('omega_2')
         test_sample_input = request.POST.get('test_sample')
@@ -63,21 +60,13 @@ def process_values(request):
         # 다변수 정규분포를 사용하여 조건부 확률밀도함수 추정
         pdf_omega_1 = multivariate_normal(mean=mean_omega_1, cov=cov_omega_1, allow_singular=True)
         pdf_omega_2 = multivariate_normal(mean=mean_omega_2, cov=cov_omega_2, allow_singular=True)
-        x_min, x_max = X[0].min() - 1, X[0].max() + 1
-        y_min, y_max = X[1].min() - 1, X[1].max() + 1
-        xx, yy = np.meshgrid(np.linspace(x_min, x_max, 100), np.linspace(y_min, y_max, 100))
-        grid = np.c_[xx.ravel(), yy.ravel()]
+        
+        # 분류 작업 수행
+        X = np.hstack([omega_1, omega_2])
+        y = np.array([0] * len(omega_1_list) + [1] * len(omega_2_list))
+        # 테스트 샘플
+        x = np.transpose(np.array(test_sample))
 
-        Z_omega_1 = pdf_omega_1.pdf(grid).reshape(xx.shape)
-        Z_omega_2 = pdf_omega_2.pdf(grid).reshape(xx.shape)
-
-        # 테스트 샘플 시각화
-        plt.scatter(x[0], x[1], color='green', marker='x', label='Test Sample')
-
-        # 결정 경계 그리기
-        Z_decision = Z_omega_1 - Z_omega_2
-        plt.contour(xx, yy, Z_decision, levels=[0], colors='black')
-        # 분류 결과 저장
         classification_results = ""
         p_x_given_omega_1 = pdf_omega_1.pdf(x)
         p_x_given_omega_2 = pdf_omega_2.pdf(x)
@@ -85,15 +74,30 @@ def process_values(request):
             classification_results="omega_1에 속합니다."
         else:
             classification_results="omega_2에 속합니다."
+        # 시각화를 위한 그래프 생성
+        fig, ax = plt.subplots()
+        
+        # 테스트 샘플 시각화
+        ax.scatter(x[0], x[1], color='green', marker='x', label='Test Sample')
 
-        # 결과 이미지 생성
-        plt.scatter(omega_1[0], omega_1[1], label='omega_1')
-        plt.scatter(omega_2[0], omega_2[1], label='omega_2')
-        plt.legend()
-        plt.xlabel('Feature 1')
-        plt.ylabel('Feature 2')
-        plt.title('Decision Boundary')
-        plt.grid(True)
+        # 결정 경계 그리기
+        x_min, x_max = X[0].min() - 1, X[0].max() + 1
+        y_min, y_max = X[1].min() - 1, X[1].max() + 1
+        xx, yy = np.meshgrid(np.linspace(x_min, x_max, 100), np.linspace(y_min, y_max, 100))
+        grid = np.c_[xx.ravel(), yy.ravel()]
+        Z_omega_1 = pdf_omega_1.pdf(grid).reshape(xx.shape)
+        Z_omega_2 = pdf_omega_2.pdf(grid).reshape(xx.shape)
+        Z_decision = Z_omega_1 - Z_omega_2
+        ax.contour(xx, yy, Z_decision, levels=[0], colors='black')
+        
+        # 클래스별 샘플 시각화
+        ax.scatter(omega_1[0], omega_1[1], label='omega_1')
+        ax.scatter(omega_2[0], omega_2[1], label='omega_2')
+        ax.legend()
+        ax.set_xlabel('Feature 1')
+        ax.set_ylabel('Feature 2')
+        ax.set_title('Decision Boundary')
+        ax.grid(True)
         plt.tight_layout()
 
         # 결과 이미지를 메모리에 저장
@@ -102,15 +106,19 @@ def process_values(request):
         buffer.seek(0)
         image_png = buffer.getvalue()
         buffer.close()
-
-        # 이미지를 Base64로 인코딩하여 HTML에 넣을 수 있도록 함
-        graphic = base64.b64encode(image_png).decode('utf-8')
-        graphic = f'data:image/png;base64,{graphic}'
-
         # 분류 결과와 함께 입력된 샘플의 클래스 출력
         result = classification_results
+        # 이미지를 Base64로 인코딩하여 HTML에 넣을 수 있도록 함
+        graphic = base64.b64encode(image_png).decode('utf-8')
 
-        # 이전 그래프를 지우고 Figure을 닫습니다.
-        plt.close(fig)
-        return render(request, 'result.html', {'graphic': graphic, 'result': result})
+        # 결과 이미지를 HTML에 렌더링
+        return render(request, 'result.html', {
+            'graphic': f'data:image/png;base64,{graphic}',
+            'result':result,
+            'mean_omega_1': mean_omega_1,
+            'mean_omega_2': mean_omega_2,
+            'cov_omega_1': cov_omega_1,
+            'cov_omega_2': cov_omega_2
+        })
+    
     return render(request, "decision_boundary.html")
