@@ -35,19 +35,13 @@ def process_values(request):
         omega_1_input = request.POST.get('omega_1')
         omega_2_input = request.POST.get('omega_2')
         test_sample_input = request.POST.get('test_sample')
-
+        
         # 입력된 값으로 omega_1과 omega_2 배열 생성 (입력 형식에 따라 적절한 변환 필요)
         omega_1_list = [list(map(float, sample.split(','))) for sample in omega_1_input.split(' ')]
         omega_2_list = [list(map(float, sample.split(','))) for sample in omega_2_input.split(' ')]
         test_sample = list(map(float, test_sample_input.split(',')))
         omega_1 = np.array(omega_1_list).T
         omega_2 = np.array(omega_2_list).T
-
-        # 분류 작업 수행
-        X = np.hstack([omega_1, omega_2])
-        y = np.array([0] * len(omega_1_list) + [1] * len(omega_2_list))
-        # 테스트 샘플
-        x = np.transpose(np.array(test_sample))
 
         # 클래스별 평균 벡터 계산
         mean_omega_1 = np.mean(omega_1, axis=1)
