@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <Link rel = "stylesheet" href = "{% static 'css/style.css' %}" >
+    <style>
+        #content-wrapper {
+            margin-top: 70px;
+            padding: 20px;
+            text-align: center;
+        }
+        #left {
+            margin-top: 10px;
+            text-align: left;
+            width: 550px;
+        }
+        .post {
+            display: flex; /* 요소를 수평으로 배치하기 위해 Flexbox 사용 */
+            margin-bottom: 20px; /* 각 포스트 간의 간격 조정 */
+        }
+
+        .post img {
+            margin-right: auto; /* 이미지를 오른쪽 끝에 위치시킵니다. */
+        }
+
+        .post-content {
+            flex: 1; /* 텍스트 영역이 가능한 너비를 모두 차지하도록 설정 */
+        }
+
+        .comments {
+            margin-top: 10px;
+            width: 150px;
+            margin-left: 10px;
+            text-align: left;   
+        }
+
+    </style>
+</head>
+<body>
+    <div id = "navbar">
+        <a href="/">
+            <span>MUlug</span>
+        </a>
+        <a href="/post/add/" class="btn btn-primary">글 작성</a>
+    </div>
+    <div id = "content-wrapper">
+        <ul class = "posts">
+            {% for post in posts %}
+                <a href="/post/{{post.id}}/"><li class = "post">
+                    <div>
+                        <div id = "left">
+                            <h1>{{post.title}} - {{post.singer}}</h1>
+                        </div>
+                        <div id = "left">{{post.content}}</div>
+                    </div>
+                    <ul class = "comments">
+                        {% for comment in post.comment_set.all %}
+                            <li class = "comment">{{comment.content}}</li>
+                        {% empty %}
+                            <li class = "comment-empty">아직 댓글이 없습니다.</li>
+                        {% endfor %}
+                    </ul>
+                    {% if post.thumbnail %}
+                        <img src="{{post.thumbnail.url}}" img width="150" height="150" alt="">
+                    {% else %}
+                        <img src="" alt="">
+                    {% endif %}
+                </li></a>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

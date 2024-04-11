@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <Link rel = "stylesheet" href = "{% static 'css/style.css' %}" >
+</head>
+<body>
+    <div id = "navbar">
+        <span>글 작성</span>
+    </div> 
+    <div id = "post-add">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+        <div>
+            <label>곡 제목</label>
+            <br>
+            <input name="title" type="text">
+            <br>
+        </div>
+        <div>
+            <label>가수명</label>
+            <br>
+            <input name="singer" type="text">
+            <br>
+        </div>
+        <div>
+            <label>가사</label>
+            <br>
+            <textarea name="lyrics" cols="50" rows="10"></textarea>
+            <br>
+        </div>
+        <div>
+            <label>곡 소개</label>
+            <br>
+            <textarea name="content" cols="50" rows="10"></textarea>
+        </div>
+        <div>
+            <label>앨범 커버</label>
+            <input name="thumbnail" type="file">
+        </div>
+        <button type="submit" class="btn btn-primary">작성</button>
+        </form>
+    </div>
+</body>
+</html>
