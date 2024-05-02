@@ -39,14 +39,14 @@ class myDES():
 def main():
     keytext='smsjang'       # 암호키
     ivetext='1234'          # 초기화 벡터를 생성하기위한 ivetext 
-    msg='python35ab'          # 암호화 하려는 메시지
+    msg='HIMYNAMEISJONGYUN'          # 암호화 하려는 메시지
 
     myCipher=myDES(keytext, ivetext)
     ciphered=myCipher.enc(msg)
     deciphered=myCipher.dec(ciphered)
-    print("ORIGINAL:\t%s" %msg)
-    print("CIPHERED:\t%s" %ciphered)
-    print("DESCIPHERED:\t%s" %deciphered)
+    print("원본 메시지:\t%s" %msg)
+    print("암호화:\t%s" %ciphered)
+    print("복호화:\t%s" %deciphered)
 
 if __name__ == '__main__':
     main()
