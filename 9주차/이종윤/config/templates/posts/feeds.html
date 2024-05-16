@@ -1,8 +1,22 @@
-<!DOCTYPE html>
-<html lang="ko">
-<body>
+{% extends 'base.html'%}
+{% block content %}
+    <nav>
+        <h1>Jonstagram</h1>
+    </nav>
+    <div id="feeds" class="post-container">
+        {% for post in posts %}
+            <article class="post">
+                <header class="post-header">
+                    {% if post.user.profile_image %}
+                        <img src="{{ post.user.profile_image.url }}">
+
+                    {% endif %}
+                    <span>{{ post.user.username }}</span>
+                </header>
+            </article>
+        {% endfor %}
+    </div>
     <h1>FEEDS</h1>
     <div>{{ user.username }}(ID: {{ user.id }})</div>
     <a href="/users/logout/">로그아웃</a>
-</body>
-</html>
+{% endblock %}
